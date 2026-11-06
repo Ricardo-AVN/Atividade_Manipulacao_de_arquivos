@@ -20,11 +20,11 @@ typedef struct
 
 void testarArquivo(FILE *arquivo);
 void cadastrarAlunoTexto(FILE *arquivo);
-void listarAlunosTexto();
-void cadastrarAlunoBinario();
-void listarAlunosBinario();
-void exibirCaracteres();
-void excluirArquivoTexto();
+void listarAlunosTexto(FILE *arquivo);
+void cadastrarAlunoBinario(FILE *arquivo);
+void listarAlunosBinario(FILE *arquivo);
+void exibirCaracteres(FILE *arquivo);
+void excluirArquivoTexto(FILE *arquivo);
 
 
 int main()
@@ -63,23 +63,23 @@ int main()
                 break;
 
             case 3:
-                listarAlunosTexto();
+                listarAlunosTexto(arquivo);
                 break;
 
             case 4:
-                cadastrarAlunoBinario();
+                cadastrarAlunoBinario(arquivo);
                 break;
 
             case 5:
-                listarAlunosBinario();
+                listarAlunosBinario(arquivo);
                 break;
 
             case 6:
-                exibirCaracteres();
+                exibirCaracteres(arquivo);
                 break;
 
             case 7:
-                excluirArquivoTexto();
+                excluirArquivoTexto(arquivo);
                 break;
 
             case 0:
@@ -137,12 +137,11 @@ void cadastrarAlunoTexto(FILE *arquivo)
 {
     Dados_alunos aluno;
 
-    arquivo = fopen(ARQUIVO_TEXTO, "w");
+    arquivo = fopen(ARQUIVO_TEXTO, "r");
 
     if (arquivo == NULL) {
         printf("Erro de abrir arquivo");
     }
-
 
     printf("Digite o RA do Aluno:\n");
     
@@ -154,7 +153,7 @@ void cadastrarAlunoTexto(FILE *arquivo)
     printf("Digite a media do aluno:\n");
     scanf("%f",&aluno.media);
 
-   fprintf("Aluno_RA: %d | Aluno_nome: %s | Aluno_media: %.2f\n", &aluno.RA, &aluno.nome, &aluno.media);
+   fprintf(arquivo,"Aluno_RA: %d | Aluno_nome: %s | Aluno_media: %.2f\n", &aluno.RA, &aluno.nome, &aluno.media);
    fclose(arquivo);
 
     printf("\nAluno cadastrado com sucesso\n");
@@ -168,10 +167,24 @@ void cadastrarAlunoTexto(FILE *arquivo)
     ====================================================
 */
 
-void listarAlunosTexto()
+void listarAlunosTexto(FILE *arquivo)
 {
+     arquivo = fopen(ARQUIVO_TEXTO, "w");
 
-    printf("\nFuncao ainda nao implementada.\n");
+    if (arquivo == NULL) {
+        printf("Erro de abrir arquivo");
+    }
+
+char linha [255];
+
+while(fgets(linha, sizeof(linha),arquivo)!=NULL){
+    printf("%s",linha);
+    
+}
+
+fclose(arquivo);
+
+    printf("\nLista de arquivos finalizado.\n");
 }
 
 
@@ -182,7 +195,7 @@ void listarAlunosTexto()
     ====================================================
 */
 
-void cadastrarAlunoBinario()
+void cadastrarAlunoBinario(FILE *arquivo)
 {
     printf("\nFuncao ainda nao implementada.\n");
 }
@@ -195,7 +208,7 @@ void cadastrarAlunoBinario()
     ====================================================
 */
 
-void listarAlunosBinario()
+void listarAlunosBinario(FILE *arquivo)
 {
     printf("\nFuncao ainda nao implementada.\n");
 }
@@ -208,7 +221,7 @@ void listarAlunosBinario()
     ====================================================
 */
 
-void exibirCaracteres()
+void exibirCaracteres(FILE *arquivo)
 {
     printf("\nFuncao ainda nao implementada.\n");
 }
@@ -221,7 +234,7 @@ void exibirCaracteres()
     ====================================================
 */
 
-void excluirArquivoTexto()
+void excluirArquivoTexto(FILE *arquivo)
 {
     printf("\nFuncao ainda nao implementada.\n");
 }
