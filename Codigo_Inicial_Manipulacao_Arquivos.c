@@ -154,7 +154,7 @@ void cadastrarAlunoTexto(FILE *arquivo)
     printf("Digite a media do aluno:\n");
     scanf("%f",&aluno.media);
 
-    size_t arquivo_gravado = fwrite(&aluno, sizeof(Dados_alunos), 1, arquivo);
+   fprintf("Aluno_RA: %d | Aluno_nome: %s | Aluno_media: %.2f\n", &aluno.RA, &aluno.nome, &aluno.media);
    fclose(arquivo);
 
     printf("\nAluno cadastrado com sucesso\n");
