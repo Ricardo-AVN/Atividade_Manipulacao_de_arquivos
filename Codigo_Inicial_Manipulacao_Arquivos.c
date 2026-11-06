@@ -19,7 +19,7 @@ typedef struct
 /* Prototipos das funcoes */
 
 void testarArquivo(FILE *arquivo);
-void cadastrarAlunoTexto();
+void cadastrarAlunoTexto(FILE *arquivo);
 void listarAlunosTexto();
 void cadastrarAlunoBinario();
 void listarAlunosBinario();
@@ -59,7 +59,7 @@ int main()
                 break;
 
             case 2:
-                cadastrarAlunoTexto();
+                cadastrarAlunoTexto(arquivo);
                 break;
 
             case 3:
@@ -106,7 +106,7 @@ int main()
 void testarArquivo(FILE *arquivo)
 {
 
-    arquivo = fopen(ARQUIVO_TEXTO, "w+");
+    arquivo = fopen(ARQUIVO_TEXTO, "w");
 
     if (arquivo == NULL) {
         printf("Erro de abrir arquivo");
@@ -124,10 +124,40 @@ void testarArquivo(FILE *arquivo)
     Cadastro utilizando arquivo texto
     ====================================================
 */
+typedef struct dados{
 
-void cadastrarAlunoTexto()
+    int RA;
+    float media;
+    char nome [255];
+    
+}Dados_alunos;
+
+
+void cadastrarAlunoTexto(FILE *arquivo)
 {
-    printf("\nFuncao ainda nao implementada.\n");
+    Dados_alunos aluno;
+
+    arquivo = fopen(ARQUIVO_TEXTO, "w");
+
+    if (arquivo == NULL) {
+        printf("Erro de abrir arquivo");
+    }
+
+
+    printf("Digite o RA do Aluno:\n");
+    
+    scanf("%d",&aluno.RA);
+
+    printf("Digite o nome completo do aluno:\n");
+    scanf(" %[^\n]",aluno.nome);
+
+    printf("Digite a media do aluno:\n");
+    scanf("%f",&aluno.media);
+
+    size_t arquivo_gravado = fwrite(&aluno, sizeof(Dados_alunos), 1, arquivo);
+   fclose(arquivo);
+
+    printf("\nAluno cadastrado com sucesso\n");
 }
 
 
@@ -140,6 +170,7 @@ void cadastrarAlunoTexto()
 
 void listarAlunosTexto()
 {
+
     printf("\nFuncao ainda nao implementada.\n");
 }
 
