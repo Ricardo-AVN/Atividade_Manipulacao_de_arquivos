@@ -27,6 +27,15 @@ void exibirCaracteres(FILE *arquivo);
 void excluirArquivoTexto();
 
 
+typedef struct dados{
+
+    int RA;
+    float media;
+    char nome [255];
+    
+}Dados_alunos;
+
+
 int main()
 {
     int opcao;
@@ -124,13 +133,6 @@ void testarArquivo(FILE *arquivo)
     Cadastro utilizando arquivo texto
     ====================================================
 */
-typedef struct dados{
-
-    int RA;
-    float media;
-    char nome [255];
-    
-}Dados_alunos;
 
 
 void cadastrarAlunoTexto(FILE *arquivo)
@@ -244,7 +246,7 @@ void listarAlunosBinario(FILE *arquivo)
         printf("Erro de abrir arquivo");
     }
 
-    size_t resultado = fread(&aluno, sizeof(aluno),1, arquivo);
+    fread(&aluno, sizeof(aluno),1, arquivo);
 
     printf("\nAluno_RA: %d | Aluno_nome: %s | Media: %.2f\n", aluno.RA, aluno.nome, aluno.media);
 }
