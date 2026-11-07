@@ -24,7 +24,7 @@ void listarAlunosTexto(FILE *arquivo);
 void cadastrarAlunoBinario(FILE *arquivo);
 void listarAlunosBinario(FILE *arquivo);
 void exibirCaracteres(FILE *arquivo);
-void excluirArquivoTexto(FILE *arquivo);
+void excluirArquivoTexto();
 
 
 int main()
@@ -79,7 +79,7 @@ int main()
                 break;
 
             case 7:
-                excluirArquivoTexto(arquivo);
+                excluirArquivoTexto();
                 break;
 
             case 0:
@@ -137,7 +137,7 @@ void cadastrarAlunoTexto(FILE *arquivo)
 {
     Dados_alunos aluno;
 
-    arquivo = fopen(ARQUIVO_TEXTO, "r");
+    arquivo = fopen(ARQUIVO_TEXTO, "a");
 
     if (arquivo == NULL) {
         printf("Erro de abrir arquivo");
@@ -153,7 +153,8 @@ void cadastrarAlunoTexto(FILE *arquivo)
     printf("Digite a media do aluno:\n");
     scanf("%f",&aluno.media);
 
-   fprintf(arquivo,"Aluno_RA: %d | Aluno_nome: %s | Aluno_media: %.2f\n", &aluno.RA, &aluno.nome, &aluno.media);
+   fprintf(arquivo,"Aluno_RA: %d | Aluno_nome: %s | Aluno_media: %.2f\n", aluno.RA, aluno.nome, aluno.media);
+   fflush(arquivo);
    fclose(arquivo);
 
     printf("\nAluno cadastrado com sucesso\n");
@@ -169,7 +170,7 @@ void cadastrarAlunoTexto(FILE *arquivo)
 
 void listarAlunosTexto(FILE *arquivo)
 {
-     arquivo = fopen(ARQUIVO_TEXTO, "w");
+     arquivo = fopen(ARQUIVO_TEXTO, "r");
 
     if (arquivo == NULL) {
         printf("Erro de abrir arquivo");
@@ -185,6 +186,7 @@ while(fgets(linha, sizeof(linha),arquivo)!=NULL){
 fclose(arquivo);
 
     printf("\nLista de arquivos finalizado.\n");
+
 }
 
 
@@ -197,32 +199,30 @@ fclose(arquivo);
 
 void cadastrarAlunoBinario(FILE *arquivo)
 {
-    printf("\nFuncao ainda nao implementada.\n");
-}
+
+    Dados_alunos aluno;
+
+    arquivo = fopen(ARQUIVO_BINARIO, "wb");
+
+    if (arquivo == NULL) {
+        printf("Erro de abrir arquivo");
+    }
 
 
-/*
-    ====================================================
-    ETAPA 4
-    Leitura de arquivo binario
-    ====================================================
-*/
+    printf("Digite o RA do Aluno:\n");
+    scanf("%d",&aluno.RA);
 
-void listarAlunosBinario(FILE *arquivo)
-{
-    printf("\nFuncao ainda nao implementada.\n");
-}
+    printf("Digite o nome completo do aluno:\n");
+    scanf(" %[^\n]",aluno.nome);
 
+    printf("Digite a media do aluno:\n");
+    scanf("%f",&aluno.media);
 
-/*
-    ====================================================
-    ETAPA 3
-    Leitura caractere por caractere
-    ====================================================
-*/
+    fwrite(&aluno, sizeof(aluno),1,arquivo);
 
-void exibirCaracteres(FILE *arquivo)
-{
+    fflush(arquivo);
+    fclose(arquivo);
+
     printf("\nFuncao ainda nao implementada.\n");
 }
 
@@ -230,11 +230,70 @@ void exibirCaracteres(FILE *arquivo)
 /*
     ====================================================
     ETAPA 5
+    Leitura de arquivo binario
+    ====================================================
+*/
+
+void listarAlunosBinario(FILE *arquivo)
+{
+    Dados_alunos aluno;
+
+    arquivo = fopen(ARQUIVO_BINARIO, "rb");
+
+    if (arquivo == NULL) {
+        printf("Erro de abrir arquivo");
+    }
+
+    size_t resultado = fread(&aluno, sizeof(aluno),1, arquivo);
+
+    printf("\nAluno_RA: %d | Aluno_nome: %s | Media: %.2f\n", aluno.RA, aluno.nome, aluno.media);
+}
+
+
+/*
+    ====================================================
+    ETAPA 6
+    Leitura caractere por caractere
+    ====================================================
+*/
+
+void exibirCaracteres(FILE *arquivo)
+{
+
+     arquivo = fopen(ARQUIVO_TEXTO, "r");
+
+    if (arquivo == NULL) {
+        printf("Erro de abrir arquivo");
+    }
+    
+    int caractere;
+
+    while((caractere = fgetc(arquivo)) != EOF){
+        putchar(caractere);
+    }
+    printf("\nListagem concluida\n");
+}
+
+
+/*
+    ====================================================
+    ETAPA 7
     Exclusao do arquivo
     ====================================================
 */
 
-void excluirArquivoTexto(FILE *arquivo)
+void excluirArquivoTexto()
 {
-    printf("\nFuncao ainda nao implementada.\n");
+
+
+    char confirmacao;
+
+    printf("Voce confirma apagar os arquivos? (S/N)\n");
+    scanf(" %c",&confirmacao);
+    if(confirmacao == 'S' || confirmacao == 's'){
+        remove(ARQUIVO_TEXTO);
+       remove(ARQUIVO_BINARIO);
+    printf("Arquivos deletados com sucesso!\n");
+    }
+
 }
